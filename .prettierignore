@@ -1,0 +1,12 @@
+
+node_modules/
+
+
+dist/
+build/
+
+
+secrets.config.js
+config.env
+
+
