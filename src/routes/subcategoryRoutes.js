@@ -1,28 +1,26 @@
 import express from "express";
-import { createSubcategory, deleteSubcategory, getAllSubcategores, getSubcategory, setSubcategory, updateSubcategory } from "../controllers/subcategoriesController.js";
-import { createProduct, } from "../controllers/productController.js";
-import { imagesUpload, resizeImages, uploadImage, uploadResizeImage } from "../middlewares/uploadImage.js";
+import subcategoriesController from "../controllers/subcategoriesController.js";
+import uploadmiddleware from "./../middlewares/uploadImage.js"
+import productRouter from "./../routes/productRoutes.js";
 
 
+const router = express.Router({ mergeParams: true });
 
-const router = express.Router();
 
-
-router
-    .route('/:id/products')
-    .post(imagesUpload, resizeImages, setSubcategory, createProduct);
-
+router.use('/:subCategoryId/product', productRouter)
 
 // Routes for fetching all subcategories and creating a new subcategory
+
+
 router.route("/")
-    .get(getAllSubcategores)  // Get all subcategories
-    .post(uploadImage, uploadResizeImage, createSubcategory);  // Create a new subcategory
+    .get(subcategoriesController.getAllSubcategores)  // Get all subcategories
+    .post(uploadmiddleware.uploadImage, uploadmiddleware.uploadResizeImage, subcategoriesController.setCategory, subcategoriesController.createSubcategory);  // Create a new subcategory
 
 // Routes for a specific subcategory (by ID): get, delete, update
 router.route("/:id")
-    .get(getSubcategory)        // Get a subcategory by ID
-    .delete(deleteSubcategory)  // Delete a subcategory by ID
-    .patch(uploadImage, uploadResizeImage, updateSubcategory);  // Update a subcategory by ID
+    .get(subcategoriesController.getSubcategory)        // Get a subcategory by ID
+    .delete(subcategoriesController.deleteSubcategory)  // Delete a subcategory by ID
+    .patch(uploadmiddleware.uploadImage, uploadmiddleware.uploadResizeImage, subcategoriesController.updateSubcategory);  // Update a subcategory by ID
 
 
 

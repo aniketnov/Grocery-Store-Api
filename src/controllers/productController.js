@@ -1,9 +1,15 @@
 import Product from "./../models/products.model.js"; // Correct model import
 
 
+const setSubcategory = (req, res, next) => {
+    console.log(req.params.subCategoryId);
+
+    if (!req.body.subcategory) req.body.subcategory = req.params.subCategoryId
+    next()
+}
 
 // GET all products
-export const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find();
 
@@ -24,7 +30,7 @@ export const getAllProducts = async (req, res) => {
 
 
 // POST (create) a new product
-export const createProduct = async (req, res) => {
+const createProduct = async (req, res) => {
     try {
         const product = await Product.create(req.body);
 
@@ -42,7 +48,7 @@ export const createProduct = async (req, res) => {
     }
 };
 
-export const getProduct = async (req, res) => {
+const getProduct = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
 
@@ -60,7 +66,7 @@ export const getProduct = async (req, res) => {
     }
 };
 
-export const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndDelete(req.params.id);
 
@@ -77,7 +83,7 @@ export const deleteProduct = async (req, res) => {
 };
 
 
-export const updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
 
 
     try {
@@ -98,4 +104,14 @@ export const updateProduct = async (req, res) => {
             message: error.message,
         });
     }
+};
+
+export default {
+    getAllProducts,
+    updateProduct,
+    deleteProduct,
+    getProduct,
+    createProduct,
+    setSubcategory
+
 };

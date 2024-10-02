@@ -1,12 +1,16 @@
 import Subcategory from "./../models/subcategories.model.js"
 
 
-export const setSubcategory = (req, res, next) => {
-    if (!req.body.subcategory) req.body.subcategory = req.params.id
-    next()
-}
 
-export const getAllSubcategores = async (req, res) => {
+
+const setCategory = (req, res, next) => {
+    if (!req.body.category) {
+        req.body.category = req.params.categoryId;
+    }
+    next();
+};
+
+const getAllSubcategores = async (req, res) => {
     try {
         const subCategories = await Subcategory.find();
 
@@ -24,11 +28,7 @@ export const getAllSubcategores = async (req, res) => {
         });
     }
 };
-export const createSubcategory = async (req, res) => {
-
-    if (req.file) {
-        req.body.image = req.file.filename;
-    }
+const createSubcategory = async (req, res) => {
     try {
 
         const subCategory = await Subcategory.create(req.body);
@@ -48,7 +48,7 @@ export const createSubcategory = async (req, res) => {
     }
 };
 
-export const getSubcategory = async (req, res) => {
+const getSubcategory = async (req, res) => {
     try {
         const subCategory = await Subcategory.findById(req.params.id)
             .populate({
@@ -70,7 +70,7 @@ export const getSubcategory = async (req, res) => {
     }
 };
 
-export const deleteSubcategory = async (req, res) => {
+const deleteSubcategory = async (req, res) => {
     try {
         const subCategory = await Subcategory.findByIdAndDelete(req.params.id);
 
@@ -86,10 +86,8 @@ export const deleteSubcategory = async (req, res) => {
     }
 };
 
-export const updateSubcategory = async (req, res) => {
-    if (req.file) {
-        req.body.image = req.file.filename;
-    }
+const updateSubcategory = async (req, res) => {
+
     try {
         const subCategory = await Subcategory.findByIdAndUpdate(req.params.id, req.body, {
             runValidators: true,
@@ -109,3 +107,13 @@ export const updateSubcategory = async (req, res) => {
         });
     }
 };
+
+
+export default {
+    getAllSubcategores,
+    updateSubcategory,
+    deleteSubcategory,
+    getSubcategory,
+    createSubcategory,
+    setCategory
+}

@@ -29,21 +29,21 @@ const upload = multer({
     fileFilter: multerFilter
 })
 
-export const uploadImage = upload.single('image')
+const uploadImage = upload.single('image')
 
-export const uploadResizeImage = async (req, res, next) => {
+const uploadResizeImage = async (req, res, next) => {
 
     if (!req.file) return next();
 
-
-    req.file.filename = `category-${req.file.originalname.split('.')[0]}-${Date.now()}.jpeg`;
-
+    const filename = `category-${req.file.originalname.split('.')[0]}-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
         .resize(270, 396)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
-        .toFile(`public/temp/${req.file.filename}`);
+        .toFile(`public/temp/${filename}`);
+
+    req.body.image = filename
 
     next();
 };
@@ -51,9 +51,13 @@ export const uploadResizeImage = async (req, res, next) => {
 
 
 
+const imagesUpload = upload.fields([
+    { name: "productImage", maxCount: 1 },
+    { name: "images", maxCount: 3 }
+])
 
 
-export const resizeImages = async (req, res, next) => {
+const resizeImages = async (req, res, next) => {
     if (!req.files.productImage || !req.files.images) return next();
 
     // 1) Cover image
@@ -84,7 +88,12 @@ export const resizeImages = async (req, res, next) => {
     next();
 }
 
-export const imagesUpload = upload.fields([
-    { name: "productImage", maxCount: 1 },
-    { name: "images", maxCount: 3 }
-])
+
+
+
+export default {
+    imagesUpload,
+    resizeImages,
+    uploadResizeImage,
+    uploadImage
+};

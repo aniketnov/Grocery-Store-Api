@@ -1,16 +1,7 @@
 
 import Category from "./../models/categories.model.js"
 
-
-
-export const setCategory = (req, res, next) => {
-    if (!req.body.category) {
-        req.body.category = req.params.id;
-    }
-    next();
-};
-
-export const getAllCategories = async (req, res) => {
+const getAllCategories = async (req, res) => {
     try {
         const Categories = await Category.find().populate({
             path: 'subcategories',
@@ -31,12 +22,8 @@ export const getAllCategories = async (req, res) => {
         });
     }
 };
-export const createCategory = async (req, res) => {
+const createCategory = async (req, res) => {
 
-
-    // if (req.file) {
-    //     req.body.image = req.file.filename;
-    // }
 
     try {
         const category = await Category.create(req.body);
@@ -54,7 +41,7 @@ export const createCategory = async (req, res) => {
         });
     }
 };
-export const getCategory = async (req, res) => {
+const getCategory = async (req, res) => {
     try {
         const category = await Category.findById(req.params.id);
 
@@ -71,7 +58,7 @@ export const getCategory = async (req, res) => {
         });
     }
 };
-export const deleteCategory = async (req, res) => {
+const deleteCategory = async (req, res) => {
     try {
         const product = await Category.findByIdAndDelete(req.params.id);
 
@@ -86,12 +73,8 @@ export const deleteCategory = async (req, res) => {
         });
     }
 };
-export const updateCategory = async (req, res) => {
+const updateCategory = async (req, res) => {
 
-
-    // if (req.file) {
-    //     req.body.image = req.file.filename;
-    // }
     try {
         const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
             runValidators: true,
@@ -113,4 +96,12 @@ export const updateCategory = async (req, res) => {
 };
 
 
+export default {
+    getAllCategories,
+    updateCategory,
+    deleteCategory,
+    getCategory,
+    createCategory,
+
+};
 
