@@ -27,10 +27,13 @@ app.use(express.static('public'));
 // Parse cookies
 app.use(cookieParser());
 
+
+
 // Define routes
 app.use('/api/v1/categories', categoryRouter);
 app.use('/api/v1/subcategories', subcategoryRouter);
 app.use('/api/v1/products', productRouter);
+
 
 
 export default app;

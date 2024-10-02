@@ -1,4 +1,5 @@
 import Subcategory from "./../models/subcategories.model.js"
+import handlerFactory from "./handlerFactory.js";
 
 
 
@@ -10,103 +11,17 @@ const setCategory = (req, res, next) => {
     next();
 };
 
-const getAllSubcategores = async (req, res) => {
-    try {
-        const subCategories = await Subcategory.find();
+const getAllSubcategores = handlerFactory.getAll(Subcategory)
+const createSubcategory = handlerFactory.CreateOne(Subcategory)
 
-        res.status(200).json({
-            status: 'success',
-            total: subCategories.length,
-            data: {
-                subCategories,
-            },
-        });
-    } catch (error) {
-        res.status(400).json({
-            status: 'error',
-            message: error.message,
-        });
-    }
-};
-const createSubcategory = async (req, res) => {
-    try {
+const getSubcategory = handlerFactory.getOne(Subcategory, {
+    path: 'products',
+    select: '-__v -createdAt -updatedAt'
+})
 
-        const subCategory = await Subcategory.create(req.body);
+const deleteSubcategory = handlerFactory.deleteOne(Subcategory)
 
-
-        res.status(201).json({
-            status: 'success',
-            data: {
-                subCategory,
-            },
-        });
-    } catch (error) {
-        res.status(400).json({
-            status: 'error',
-            message: error.message,
-        });
-    }
-};
-
-const getSubcategory = async (req, res) => {
-    try {
-        const subCategory = await Subcategory.findById(req.params.id)
-            .populate({
-                path: 'products',
-                select: '-__v -createdAt -updatedAt'
-            });
-
-        res.status(200).json({
-            status: 'success',
-            data: {
-                subCategory,
-            },
-        });
-    } catch (error) {
-        res.status(400).json({
-            status: 'error',
-            message: error.message,
-        });
-    }
-};
-
-const deleteSubcategory = async (req, res) => {
-    try {
-        const subCategory = await Subcategory.findByIdAndDelete(req.params.id);
-
-        res.status(204).json({
-            status: 'success',
-            data: null
-        });
-    } catch (error) {
-        res.status(400).json({
-            status: 'error',
-            message: error.message,
-        });
-    }
-};
-
-const updateSubcategory = async (req, res) => {
-
-    try {
-        const subCategory = await Subcategory.findByIdAndUpdate(req.params.id, req.body, {
-            runValidators: true,
-            new: true
-        });
-
-        res.status(200).json({
-            status: 'success',
-            data: {
-                subCategory,
-            },
-        });
-    } catch (error) {
-        res.status(400).json({
-            status: 'error',
-            message: error.message,
-        });
-    }
-};
+const updateSubcategory = handlerFactory.updateOne(Subcategory)
 
 
 export default {
