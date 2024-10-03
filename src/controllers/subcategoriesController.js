@@ -5,6 +5,7 @@ import handlerFactory from "./handlerFactory.js";
 
 
 const setCategory = (req, res, next) => {
+
     if (!req.body.category) {
         req.body.category = req.params.categoryId;
     }

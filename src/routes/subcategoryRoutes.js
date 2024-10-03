@@ -7,7 +7,7 @@ import productRouter from "./../routes/productRoutes.js";
 const router = express.Router({ mergeParams: true });
 
 
-router.use('/:subCategoryId/product', productRouter)
+router.use('/:subCategoryId/prn', productRouter)
 
 // Routes for fetching all subcategories and creating a new subcategory
 

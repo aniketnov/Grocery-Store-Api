@@ -15,7 +15,7 @@ const router = express.Router();
 //     .route('/:id/subcategories')
 //     .post(uploadmiddleware.uploadImage, uploadmiddleware.uploadResizeImage, categoriesController.setCategory, subcategoriesController.createSubcategory);
 
-router.use('/:categoryId/subcategories', subcategoryRouter)
+router.use('/:categoryId/sn', subcategoryRouter)
 
 
 // Routes for fetching all categories and creating a new category

@@ -33,6 +33,10 @@ categorySchema.virtual('subcategories', {
     localField: '_id'
 });
 
+
+
+
+
 // Corrected mongoose model creation
 const Category = mongoose.model('Category', categorySchema);
 

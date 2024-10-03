@@ -30,9 +30,9 @@ app.use(cookieParser());
 
 
 // Define routes
-app.use('/api/v1/categories', categoryRouter);
-app.use('/api/v1/subcategories', subcategoryRouter);
-app.use('/api/v1/products', productRouter);
+app.use('/api/v1/cn', categoryRouter);
+app.use('/api/v1/sn', subcategoryRouter);
+app.use('/api/v1/prn', productRouter);
 
 
 
