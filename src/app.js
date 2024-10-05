@@ -5,6 +5,7 @@ import morgan from "morgan";
 import productRouter from "./routes/productRoutes.js";
 import categoryRouter from "./routes/categoryRoutes.js";
 import subcategoryRouter from "./routes/subcategoryRoutes.js";
+import userRouter from "./routes/userRoutes.js"
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(cookieParser());
 app.use('/api/v1/cn', categoryRouter);
 app.use('/api/v1/sn', subcategoryRouter);
 app.use('/api/v1/prn', productRouter);
+app.use("/api/v1/users", userRouter)
 
 
 

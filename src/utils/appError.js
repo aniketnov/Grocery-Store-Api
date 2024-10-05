@@ -1,13 +1,13 @@
-class AppError extends Error {
-  constructor(message, statusCode) {
-    super(message);
+function AppError(message, statusCode) {
+  const error = new Error(message); // Create the error object without throwing
 
-    this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
-    this.isOperational = true;
+  error.statusCode = statusCode;
+  error.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+  error.isOperational = true;
 
-    Error.captureStackTrace(this, this.constructor);
-  }
+  Error.captureStackTrace(error, AppError); // Capture the stack trace
+
+  return error; // Return the custom error object
 }
 
-export default AppError
+export default AppError;

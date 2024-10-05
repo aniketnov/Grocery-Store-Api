@@ -1,6 +1,5 @@
 import express from "express";
 import categoriesController from './../controllers/categoriesController.js';
-import subcategoriesController from "../controllers/subcategoriesController.js";
 import uploadmiddleware from "./../middlewares/uploadImage.js"
 import subcategoryRouter from "./../routes/subcategoryRoutes.js"
 
