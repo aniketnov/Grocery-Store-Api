@@ -25,6 +25,16 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true
     },
+    contactNumber: {
+        type: String,
+        required: [true, 'Please enter your contact number'],
+        validate: {
+            validator: function (v) {
+                return /^\d{10}$/.test(v); // Example validation for 10-digit phone numbers
+            },
+            message: 'Please enter a valid 10-digit contact number!'
+        }
+    },
     password: {
         type: String,
         required: [true, 'Please Enter Your Password'],
@@ -40,6 +50,11 @@ const userSchema = new mongoose.Schema({
             },
             message: 'Passwords do not match!'
         }
+    },
+    active: {
+        type: Boolean,
+        default: true,
+        select: false
     },
     changePasswordAt: Date,
     passwordResetToken: String,
@@ -58,6 +73,11 @@ userSchema.pre('save', async function (next) {
     this.confirmPassword = undefined;
     next();
 });
+
+userSchema.pre(/^find/, function (next) {
+    this.find({ active: { $ne: false } })
+    next()
+})
 
 userSchema.pre('save', function (next) {
     if (!this.isModified('password') || this.isNew) return next();
@@ -86,9 +106,6 @@ userSchema.methods.createpasswordresetToken = function () {
     this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex')
 
     this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-
-
-
 
     return resetToken;
 }

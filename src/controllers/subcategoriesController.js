@@ -12,7 +12,7 @@ const setCategory = (req, res, next) => {
     next();
 };
 
-const getAllSubcategores = handlerFactory.getAll(Subcategory)
+const getAllSubcategories = handlerFactory.getAll(Subcategory)
 const createSubcategory = handlerFactory.CreateOne(Subcategory)
 
 const getSubcategory = handlerFactory.getOne(Subcategory, {
@@ -26,7 +26,7 @@ const updateSubcategory = handlerFactory.updateOne(Subcategory)
 
 
 export default {
-    getAllSubcategores,
+    getAllSubcategories,
     updateSubcategory,
     deleteSubcategory,
     getSubcategory,

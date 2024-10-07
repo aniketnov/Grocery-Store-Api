@@ -67,9 +67,7 @@ const getAll = (Model, popOptions) => catchAsync(async (req, res, next) => {
     res.status(200).json({
         status: 'success',
         total: doc.length,
-        data: {
-            data: doc
-        },
+        data: doc,
     });
 
 });
